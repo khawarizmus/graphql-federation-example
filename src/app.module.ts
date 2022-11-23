@@ -3,13 +3,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { OgmaModule } from '@ogma/nestjs-module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import Base from '../config/base.config';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { GraphQLModule } from '@nestjs/graphql';
+// config files
+import Base from '../config/base.config';
+import GraphQl from '../config/gql.config';
+import { ApolloGatewayDriver } from '@nestjs/apollo';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [Base],
+      load: [Base, GraphQl],
       cache: true,
     }),
     OgmaModule.forRootAsync({
@@ -19,7 +23,13 @@ import { ThrottlerModule } from '@nestjs/throttler';
     }),
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (conf: ConfigService) => conf.get('throttling'),
+      useFactory: async (conf: ConfigService) => conf.get('throttling'),
+      inject: [ConfigService],
+    }),
+    GraphQLModule.forRootAsync({
+      driver: ApolloGatewayDriver,
+      imports: [ConfigModule],
+      useFactory: async (conf: ConfigService) => conf.get('gql'),
       inject: [ConfigService],
     }),
   ],
