@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveReference,
+} from '@nestjs/graphql';
 import { PandasService } from './pandas.service';
 import { Panda } from './entities/panda.entity';
 import { CreatePandaInput } from './dto/create-panda.input';
@@ -20,7 +27,7 @@ export class PandasResolver {
 
   @Query(() => Panda, { name: 'panda' })
   findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.pandasService.findOne(id);
+    return this.pandasService.findById(id);
   }
 
   @Mutation(() => Panda)
@@ -31,5 +38,10 @@ export class PandasResolver {
   @Mutation(() => Panda)
   removePanda(@Args('id', { type: () => Int }) id: number) {
     return this.pandasService.remove(id);
+  }
+
+  @ResolveReference()
+  resolveReference(reference: { __typename: string; id: number }): Panda {
+    return this.pandasService.findById(reference.id);
   }
 }

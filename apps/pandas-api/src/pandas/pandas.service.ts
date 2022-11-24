@@ -1,26 +1,48 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePandaInput } from './dto/create-panda.input';
 import { UpdatePandaInput } from './dto/update-panda.input';
+import { Panda } from './entities/panda.entity';
 
 @Injectable()
 export class PandasService {
+  private pandas: Panda[] = [
+    {
+      id: 1,
+      name: 'puffy',
+      age: 20,
+      favoriteFood: 'Bamboo',
+    },
+  ];
+
   create(createPandaInput: CreatePandaInput) {
-    return 'This action adds a new panda';
+    const id = this.pandas.length + 1;
+    this.pandas.push(
+      Object.assign(createPandaInput, {
+        id,
+        favoriteFood: 'Bamboo',
+      }),
+    );
+    return this.pandas[id - 1];
   }
 
   findAll() {
-    return `This action returns all pandas`;
+    return this.pandas;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} panda`;
+  findById(id: number) {
+    return this.pandas.find((panda) => panda.id === id);
   }
 
   update(id: number, updatePandaInput: UpdatePandaInput) {
-    return `This action updates a #${id} panda`;
+    return (this.pandas[id - 1] = Object.assign(
+      this.pandas[id - 1],
+      updatePandaInput,
+    ));
   }
 
   remove(id: number) {
-    return `This action removes a #${id} panda`;
+    const start = id - 1;
+    const deleteCount = 1;
+    return this.pandas.splice(start, deleteCount)[0];
   }
 }
