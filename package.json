@@ -18,7 +18,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/graphql-api/test/e2e/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/graphql-gateway/test/e2e/jest-e2e.json"
   },
   "dependencies": {
     "@apollo/federation": "^0.38.1",
@@ -74,7 +74,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "test/unit",
+    "rootDir": "./",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"

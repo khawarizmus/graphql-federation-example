@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PandasApiController } from './pandas-api.controller';
-import { PandasApiService } from './pandas-api.service';
+import { PandasApiController } from '../../src/pandas-api.controller';
+import { PandasApiService } from '../../src/pandas-api.service';
 
 describe('PandasApiController', () => {
   let pandasApiController: PandasApiController;

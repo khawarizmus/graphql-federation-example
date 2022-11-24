@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { PandasApiModule } from './../src/pandas-api.module';
+import { PandasApiModule } from '../../src/pandas-api.module';
 
 describe('PandasApiController (e2e)', () => {
   let app: INestApplication;
