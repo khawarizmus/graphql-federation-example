@@ -14,13 +14,13 @@ const generateCerts = async () => {
   // we create certs for dev local env so we can use https
   await certificateFor('localhost')
     .then(({ key, cert }) => {
-      fs.writeFileSync(`${cwd()}/cert/tls.key`, key);
-      fs.writeFileSync(`${cwd()}/cert/tls.cert`, cert);
+      fs.writeFileSync(`${cwd()}/apps/graphql-gateway/cert/tls.key`, key);
+      fs.writeFileSync(`${cwd()}/apps/graphql-gateway/cert/tls.cert`, cert);
     })
     .catch(console.error);
   return {
-    key: fs.readFileSync(`${cwd()}/cert/tls.key`),
-    cert: fs.readFileSync(`${cwd()}/cert/tls.cert`),
+    key: fs.readFileSync(`${cwd()}/apps/graphql-gateway/cert/tls.key`),
+    cert: fs.readFileSync(`${cwd()}/apps/graphql-gateway/cert/tls.cert`),
   };
 };
 
@@ -30,9 +30,11 @@ async function bootstrap() {
       AppModule,
       process.env.NODE_ENV === 'production'
         ? { logger: false }
-        : {
+        : process.env.USE_HTTPS === '1'
+        ? {
             httpsOptions: await generateCerts(),
-          },
+          }
+        : undefined,
     );
 
     const logger = app.get<OgmaService>(OgmaService);
@@ -42,6 +44,8 @@ async function bootstrap() {
     // Add helmet for some well-known web vulnerabilities which will set HTTP headers appropriately.
     app.use(
       helmet({
+        // https://stackoverflow.com/questions/71904052/getting-notsameoriginafterdefaultedtosameoriginbycoep-error-with-helmet
+        crossOriginEmbedderPolicy: false,
         contentSecurityPolicy:
           process.env.NODE_ENV === 'production' ? undefined : false,
       }),
@@ -52,7 +56,7 @@ async function bootstrap() {
     const PORT = configService.get<number>('port');
 
     await app.listen(PORT).then(() => {
-      Logger.log(`🚀 Server ready at port ${PORT}`);
+      Logger.log(`🚀 Gateway server ready at port ${PORT}`);
     });
   } catch (e) {
     Logger.error(`[ERROR] [server]: ${e.message}`);
