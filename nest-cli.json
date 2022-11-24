@@ -1,5 +1,31 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "apps/graphql-gateway/src",
+  "monorepo": true,
+  "root": "apps/graphql-api",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/graphql-gateway/tsconfig.app.json"
+  },
+  "projects": {
+    "graphql-gateway": {
+      "type": "application",
+      "root": "apps/graphql-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/graphql-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/graphql-gateway/tsconfig.app.json"
+      }
+    },
+    "pandas-api": {
+      "type": "application",
+      "root": "apps/pandas-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/pandas-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/pandas-api/tsconfig.app.json"
+      }
+    }
+  }
 }

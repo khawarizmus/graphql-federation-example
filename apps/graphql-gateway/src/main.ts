@@ -58,4 +58,5 @@ async function bootstrap() {
     Logger.error(`[ERROR] [server]: ${e.message}`);
   }
 }
+
 bootstrap();
