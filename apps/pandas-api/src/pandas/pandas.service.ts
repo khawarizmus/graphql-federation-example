@@ -8,10 +8,12 @@ export class PandasService {
   private pandas: Panda[] = [
     {
       id: 1,
-      name: 'puffy',
+      name: 'Puffy',
       age: 20,
       favoriteFood: 'Bamboo',
     },
+    { id: 2, name: 'Basi', age: 21, favoriteFood: 'Bamboo' },
+    { id: 3, name: 'Yun', age: 23, favoriteFood: 'Bamboo' },
   ];
 
   create(createPandaInput: CreatePandaInput) {

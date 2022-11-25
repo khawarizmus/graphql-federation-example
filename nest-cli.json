@@ -26,6 +26,24 @@
       "compilerOptions": {
         "tsConfigPath": "apps/pandas-api/tsconfig.app.json"
       }
+    },
+    "users-api": {
+      "type": "application",
+      "root": "apps/users-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/users-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/users-api/tsconfig.app.json"
+      }
+    },
+    "posts-api": {
+      "type": "application",
+      "root": "apps/posts-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/posts-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/posts-api/tsconfig.app.json"
+      }
     }
   }
 }

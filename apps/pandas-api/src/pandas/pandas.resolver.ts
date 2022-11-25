@@ -16,27 +16,31 @@ export class PandasResolver {
   constructor(private readonly pandasService: PandasService) {}
 
   @Mutation(() => Panda)
-  createPanda(@Args('createPandaInput') createPandaInput: CreatePandaInput) {
+  createPanda(
+    @Args('createPandaInput') createPandaInput: CreatePandaInput,
+  ): Panda {
     return this.pandasService.create(createPandaInput);
   }
 
   @Query(() => [Panda], { name: 'pandas' })
-  findAll() {
+  findAll(): Panda[] {
     return this.pandasService.findAll();
   }
 
   @Query(() => Panda, { name: 'panda' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => Int }) id: number): Panda {
     return this.pandasService.findById(id);
   }
 
   @Mutation(() => Panda)
-  updatePanda(@Args('updatePandaInput') updatePandaInput: UpdatePandaInput) {
+  updatePanda(
+    @Args('updatePandaInput') updatePandaInput: UpdatePandaInput,
+  ): Panda {
     return this.pandasService.update(updatePandaInput.id, updatePandaInput);
   }
 
   @Mutation(() => Panda)
-  removePanda(@Args('id', { type: () => Int }) id: number) {
+  removePanda(@Args('id', { type: () => Int }) id: number): Panda {
     return this.pandasService.remove(id);
   }
 

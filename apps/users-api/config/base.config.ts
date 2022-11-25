@@ -32,7 +32,7 @@ export default () => ({
     service: {
       color: process.env.NODE_ENV === 'production' ? false : true,
       json: process.env.NODE_ENV === 'production',
-      application: 'pandas-api',
+      application: 'users-api',
     },
     interceptor: {
       http: ExpressParser,
