@@ -1,26 +1,50 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
+import { Post } from './entities/post.entity';
 
 @Injectable()
 export class PostsService {
+  private posts: Post[] = [
+    {
+      id: 1,
+      authorId: 1,
+      title: 'Rework',
+    },
+  ];
+
   create(createPostInput: CreatePostInput) {
-    return 'This action adds a new post';
+    const id = this.posts.length + 1;
+    this.posts.push(
+      Object.assign(createPostInput, {
+        id,
+      }),
+    );
+    return this.posts[id - 1];
   }
 
   findAll() {
-    return `This action returns all posts`;
+    return this.posts;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  findById(id: number) {
+    return this.posts.find((post) => post.id === id);
+  }
+
+  forAuthor(id: number) {
+    return this.posts.filter((post) => post.authorId === id);
   }
 
   update(id: number, updatePostInput: UpdatePostInput) {
-    return `This action updates a #${id} post`;
+    return (this.posts[id - 1] = Object.assign(
+      this.posts[id - 1],
+      updatePostInput,
+    ));
   }
 
   remove(id: number) {
-    return `This action removes a #${id} post`;
+    const start = id - 1;
+    const deleteCount = 1;
+    return this.posts.splice(start, deleteCount)[0];
   }
 }

@@ -12,7 +12,7 @@ import GraphQl from '../config/gql.config';
   imports: [
     ConfigModule.forRoot({
       load: [Base, GraphQl],
-      envFilePath: './apps/users-api/.env',
+      envFilePath: './apps/posts-api/.env',
       ignoreEnvFile: process.env.NODE_ENV === 'production' ? true : false,
       cache: true,
     }),

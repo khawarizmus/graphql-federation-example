@@ -1,7 +1,18 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, Directive, ID } from '@nestjs/graphql';
+import { User } from './user.entity';
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 export class Post {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => ID)
+  id: number;
+
+  @Field()
+  title: string;
+
+  @Field(() => Int)
+  authorId: number;
+
+  @Field(() => User)
+  user?: User;
 }

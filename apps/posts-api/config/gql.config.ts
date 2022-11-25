@@ -1,6 +1,7 @@
 import { ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { registerAs } from '@nestjs/config';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import { User } from '../src/posts/entities/user.entity';
 
 export default registerAs(
   'gql',
@@ -13,6 +14,9 @@ export default registerAs(
     // plugins: [ApolloServerPluginLandingPageLocalDefault()],
     autoSchemaFile: {
       federation: 2,
+    },
+    buildSchemaOptions: {
+      orphanedTypes: [User],
     },
   }),
 );
